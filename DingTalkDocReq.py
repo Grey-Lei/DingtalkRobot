@@ -1,11 +1,12 @@
+# -*- coding: utf-8 -*-
+
 import json
 import requests
-# import config
 from config import *
 
 
 def once_called(func):
-    '''函数只调用一次，二次调用时，返回首次调用时的返回值'''
+    """函数只调用一次，二次调用时，返回首次调用时的返回值"""
     is_called = False
     result = None
 
@@ -23,15 +24,13 @@ class DingTalkDoc:
     """获取钉钉文档类"""
     def __init__(self):
         self.headers = {"Host": "api.dingtalk.com", "Content-Type": "application/json"}
-        # self.headers = {"Host": "api.dingtalk.com", "Content-Type": "application/json", "x-acs-dingtalk-access-token": "14649578ac8d36dd9cae57a14a8aad41"}
 
     @staticmethod
     def send_requests(method, url, data=None, headers=None, params=None):
         """发动requests请求"""
         data = json.dumps(data) if data else data
         resp = requests.request(method=method, url=url, data=data, headers=headers, params=params)
-        # print(resp.text)
-        # print(type(resp))
+
         return json.loads(resp.text)
 
     def get_access_token(self):
@@ -52,7 +51,6 @@ class DingTalkDoc:
         # GET /v1.0/doc/workspaces?operatorId=String&includeRecent=Boolean
         params = {
             "operatorId": self.get_operator_id,
-            # "operatorId": "pMwTvN3Z2OrUhIPDR79TNwiEiE",
             "includeRecent": False
         }
         resp = DingTalkDoc.send_requests('get', space_url, headers=self.headers, params=params)
@@ -85,13 +83,11 @@ class DingTalkDoc:
         # GET /v2.0/doc/spaces/{spaceId}/directories?dentryId=String&operatorId=String&nextToken=String&maxResults=Integer
         params = {
             "operatorId": self.get_operator_id,
-            # "operatorId": "pMwTvN3Z2OrUhIPDR79TNwiEiE",
+
             "maxResults": maxResults,
-            # "dentryId": "r98zndQPoDkgLmLx"
             "dentryId": dentryid
         }
         resp = DingTalkDoc.send_requests('get', dentry_url.format(self.get_space_id()), headers=self.headers, params=params)
-        # resp = DingTalkDoc.send_requests('get', dentry_url.format("r98zne6Jdn0naGLx"), headers=self.headers, params=params)
         return resp
 
     def main(self):
@@ -130,5 +126,4 @@ if __name__ == '__main__':
     # obj.get_operator_id     # pMwTvN3Z2OrUhIPDR79TNwiEiE
     # obj.get_space_id("一个云测试")      # r98zne6Jdn0naGLx(一个云测试)
     # obj.get_dentry_id()     # r98zndQPoDkgLmLx(测试用例库)  # r98zndQ9oEnPvmLx(工作计划)
-    # dir_name = "工作计划"
     obj.main()

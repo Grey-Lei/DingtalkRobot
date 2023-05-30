@@ -7,20 +7,14 @@ import hashlib
 import base64
 import requests
 import urllib.parse
-import AccessTokenReq
+import DingTalkDocReq
 from datetime import datetime
 from config import *
 
-# https://oapi.dingtalk.com/robot/send?access_token=c763c12c2060aa267e91ca61cf6d61050728c8fc9ada64d41d601d10b68b57d2&timestamp=XXX&sign=9qTr5VQ4f66zl%2FT1pfRvOg7IvIBNckzBgT%2BflKkfLKY%3D
-# curl 'https://oapi.dingtalk.com/robot/send?access_token=c763c12c2060aa267e91ca61cf6d61050728c8fc9ada64d41d601d10b68b57d2&timestamp=1684912413186&sign=9qTr5VQ4f66zl%2FT1pfRvOg7IvIBNckzBgT%2BflKkfLKY%3D' -H 'Content-Type: application/json' -d '{"msgtype": "text","text": {"content":"我就是我, 是不一样的烟火"}}'
-
-# headers={"Content-Type":"application/json;charset=UTF-8"}
-
 
 class DingTalkBot:
-    '''dingtalk 机器人类'''
+    """机器人类"""
     msgtype = "text"
-    # alidocs_url = "https://alidocs.dingtalk.com/i/nodes/NZQYprEoWoQRD0qRUeoBgY9bJ1waOeDk?iframeQuery=sheet_range%3Dkgqie6hm_0_0_1_1"
     headers = {"Content-Type": "application/json;charset=UTF-8"}
     isAtAll = True
     verify = False
@@ -41,7 +35,7 @@ class DingTalkBot:
         return url
 
     def send_text(self, doc_url):
-        '''发送文本消息'''
+        """发送文本消息"""
         msg_body = {
             "msgtype": "text",
             "text": {
@@ -60,7 +54,7 @@ class DingTalkBot:
             return {"errmsg": repr(e)}
 
     def send_link(self):
-        '''发送link类型消息'''
+        """发送link类型消息"""
         msg_body = {
             "msgtype": "link",
             "link": {
@@ -85,14 +79,13 @@ class DingTalkBot:
             return {"errmsg": repr(e)}
 
     def send_markdown(self, doc_url):
-        '''发送markdown类型消息'''
+        """发送markdown类型消息"""
         msg_body = {
             "msgtype": "markdown",
             "markdown": {
              "title": "工作任务",
              # "text": "#### 工作任务 \n > 本周任务计划 \n > [![screenshot](https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png)](%s) \n > ###### %s 发布 [工作项](%s) \n" % (doc_url, self.time_format, doc_url)
              "text": "#### 工作任务 \n > 本周任务计划 \n > [![screenshot](https://gitee.com/gyh111/username/raw/master/work.png)](%s) \n > ###### %s 发布 [工作项](%s) \n" % (doc_url, self.time_format, doc_url)
-             # "text": "%s" % doc_url
             },
             "at": {
                 # "atMobiles": self.atMobiles,
@@ -131,13 +124,13 @@ class DingTalkBot:
 
 
 if __name__ == '__main__':
-    last_doc_url = AccessTokenReq.obj.main()
+    last_doc_url = DingTalkDocReq.obj.main()
     obj = DingTalkBot(webhook, secret)
     print("last_doc_url: %s" % last_doc_url)
-    # print(obj.send_text(last_doc_url))
-    # print(obj.send_link())
+    # obj.send_text(last_doc_url)
+    # obj.send_link()
     obj.send_markdown(last_doc_url)
-    # print(obj.send_action_card())
+    # obj.send_action_card()
 
 
 
