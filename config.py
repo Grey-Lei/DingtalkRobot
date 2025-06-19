@@ -17,8 +17,12 @@ userid = "285610060838650170"
 language = "zh_CN"
 maxResults = 10
 
-# 钉钉机器人
+# 钉钉机器人--测试工作同步群
 webhook = "https://oapi.dingtalk.com/robot/send?access_token=c763c12c2060aa267e91ca61cf6d61050728c8fc9ada64d41d601d10b68b57d2"
 secret = "SEC762bd9e547c7756e13a0330426bd2696c14d1de6ea1dc0e566c4c0b9efccd0e7"
 atMobiles = ["17538571127", ]
 atUserIds = []
+
+# 钉钉机器人--每周工作提醒群
+# webhook = "https://oapi.dingtalk.com/robot/send?access_token=ddb6e8a745b0efe683bcd46d2f582e5abc72dbbb03887aecd8f25016301135fc"
+# secret = "SEC5cf2e157d10fdf09c5e4f4e475c80ba8d511874cfb945d455a9e4a459d2e50f3"

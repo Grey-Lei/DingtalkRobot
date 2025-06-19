@@ -38,13 +38,13 @@ class DingTalkBot:
         """发送文本消息"""
         msg_body = {
             "msgtype": "text",
-            "text": {
-                "content": doc_url
-            },
             "at": {
                 # "atMobiles": self.atMobiles,
                 # "atUserIds": self.atUserIds,
                 "isAtAll": self.isAtAll
+            },
+            "text": {
+                "content": doc_url
             }
         }
         try:
@@ -83,9 +83,18 @@ class DingTalkBot:
         msg_body = {
             "msgtype": "markdown",
             "markdown": {
-             "title": "工作任务",
+            #  "title": "工作任务",
+            #  # "text": "#### 工作任务 \n > 本周任务计划 \n > [![screenshot](https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png)](%s) \n > ###### %s 发布 [工作项](%s) \n" % (doc_url, self.time_format, doc_url)
+            #  "text": "#### 工作任务 \n > 本周任务计划 \n > [![screenshot](https://gitee.com/gyh111/username/raw/master/work.png)](%s) \n > ###### %s 发布 [工作项](%s) \n" % (doc_url, self.time_format, doc_url)
+            # },
+            # "at": {
+            #     # "atMobiles": self.atMobiles,
+            #     # "atUserIds": self.atUserIds,
+            #     "isAtAll": self.isAtAll
+            # }
+            "title": "SaaS管控发布提醒",
              # "text": "#### 工作任务 \n > 本周任务计划 \n > [![screenshot](https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png)](%s) \n > ###### %s 发布 [工作项](%s) \n" % (doc_url, self.time_format, doc_url)
-             "text": "#### 工作任务 \n > 本周任务计划 \n > [![screenshot](https://gitee.com/gyh111/username/raw/master/work.png)](%s) \n > ###### %s 发布 [工作项](%s) \n" % (doc_url, self.time_format, doc_url)
+            "text": "#### 请检查上线前必要check项是否已全部完成: \n1. 预发环境P0用例的回归验证，统一在本周迭代报告里面标记 \n2. 不能遗留未完成的bug单，特定原因无法关闭的问题单必须在问题单内描述无法关闭的原因 \n3. 暂不修复的bug单统一截图发到产线群由产线负责人决定是否暂不修复 \n4. 运维平台所有测试完成的需求单或bugfix，在上线前统一更新为待发布状态"
             },
             "at": {
                 # "atMobiles": self.atMobiles,
@@ -124,13 +133,16 @@ class DingTalkBot:
 
 
 if __name__ == '__main__':
-    last_doc_url = DingTalkDocReq.obj.main()
+    # last_doc_url = DingTalkDocReq.obj.main()
     obj = DingTalkBot(webhook, secret)
-    print("last_doc_url: %s" % last_doc_url)
-    # obj.send_text(last_doc_url)
+    # print("last_doc_url: %s" % last_doc_url)
     # obj.send_link()
-    obj.send_markdown(last_doc_url)
+    # obj.send_markdown(last_doc_url)
     # obj.send_action_card()
+
+    content = "请检查上线前必要check项是否已全部完成: \n1. 预发环境P0用例的回归验证，统一在本周迭代报告里面标记 \n2. 不能遗留未完成的bug单，特定原因无法关闭的问题单必须在问题单内描述无法关闭的原因 \n3. 暂不修复的bug单统一截图发到产线群由产线负责人决定是否暂不修复 \n4. 运维平台所有测试完成的需求单或bugfix，在上线前统一更新为待发布状态"
+    obj.send_text(content)
+
 
 
 
